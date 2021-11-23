@@ -6,7 +6,7 @@
 /*   By: lshonta <lshonta@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 23:00:42 by lshonta           #+#    #+#             */
-/*   Updated: 2021/11/18 16:56:47 by lshonta          ###   ########.fr       */
+/*   Updated: 2021/11/23 17:51:24 by lshonta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ char	*ft_read_string(int fd, char *memory)
 	char	*tmp;
 	int		byte;
 
-	tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!tmp)
 		return (NULL);
 	byte = 1;
@@ -95,7 +95,7 @@ char	*get_next_line(int fd)
 	static char	*memory[1024];
 	char		*line;
 
-	if (!fd || fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	memory[fd] = ft_read_string(fd, memory[fd]);
 	if (!memory[fd])

@@ -6,7 +6,7 @@
 /*   By: lshonta <lshonta@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 23:00:42 by lshonta           #+#    #+#             */
-/*   Updated: 2021/11/18 17:00:24 by lshonta          ###   ########.fr       */
+/*   Updated: 2021/11/23 18:27:11 by lshonta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_put_line(char *memory)
 		return (NULL);
 	while (memory[i] && memory[i] != '\n')
 		i++;
-	str = (char *)malloc(sizeof(char) * (i + 2));
+	str = (char *)malloc(sizeof(char) * (i + 1));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -71,10 +71,10 @@ char	*ft_read_string(int fd, char *memory)
 	char	*tmp;
 	int		byte;
 
-	tmp = malloc((BUFFER_SIZE + 1) * sizeof(char));
+	tmp = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
 	if (!tmp)
 		return (NULL);
-	byte = 1;
+	byte = -1;
 	while (!ft_strchr(memory, '\n') && byte != 0)
 	{
 		byte = read (fd, tmp, BUFFER_SIZE);
@@ -95,7 +95,7 @@ char	*get_next_line(int fd)
 	static char	*memory[1024];
 	char		*line;
 
-	if (!fd || fd < 0 || BUFFER_SIZE <= 0)
+	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
 		return (NULL);
 	memory[fd] = ft_read_string(fd, memory[fd]);
 	if (!memory[fd])
@@ -113,8 +113,8 @@ char	*get_next_line(int fd)
 // 	int fd;
 
 // 	fd = open("text", O_RDONLY);
-// 	char* line;
-// 	line = get_next_line(fd);
+// 	// fd = 0;
+// 	char* line = get_next_line(fd);
 // 	while(line)
 // 	{
 // 		printf("%s", line);
