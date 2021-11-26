@@ -6,7 +6,7 @@
 /*   By: lshonta <lshonta@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/13 23:00:42 by lshonta           #+#    #+#             */
-/*   Updated: 2021/11/23 17:51:24 by lshonta          ###   ########.fr       */
+/*   Updated: 2021/11/26 19:06:15 by lshonta          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ char	*ft_put_line(char *memory)
 		return (NULL);
 	while (memory[i] && memory[i] != '\n')
 		i++;
-	str = (char *)malloc(sizeof(char) * (i + 1));
+	str = (char *)malloc(sizeof(char) * (i + 2));
 	if (!str)
 		return (NULL);
 	i = 0;
@@ -92,7 +92,7 @@ char	*ft_read_string(int fd, char *memory)
 
 char	*get_next_line(int fd)
 {
-	static char	*memory[1024];
+	static char	*memory[OPEN_MAX];
 	char		*line;
 
 	if (fd < 0 || BUFFER_SIZE <= 0 || read(fd, 0, 0) < 0)
@@ -104,3 +104,22 @@ char	*get_next_line(int fd)
 	memory[fd] = ft_new_string(memory[fd]);
 	return (line);
 }
+
+// #include "stdio.h"
+// #include <fcntl.h>
+
+// int main()
+// {
+// 	int fd;
+
+// 	fd = open("text", O_RDONLY);
+// 	char* line;
+// 	while ((line = get_next_line(fd)))
+// 	{
+// 		printf("%s", line);
+// 		// line = get_next_line(fd);
+// 		free(line);
+// 		line = NULL;
+// 	}
+// 	close (fd);
+// }
